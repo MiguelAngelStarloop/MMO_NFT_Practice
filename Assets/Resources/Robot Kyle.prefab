@@ -1481,6 +1481,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   directionDampTime: 0.25
   health: 1
+  horizontal: 0
+  vertical: 0
 --- !u!114 &4661465291681588942
 MonoBehaviour:
   m_ObjectHideFlags: 0

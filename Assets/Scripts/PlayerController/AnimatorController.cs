@@ -12,6 +12,9 @@ public class AnimatorController : MonoBehaviourPunCallbacks, IPunObservable
     private GameObject playerUi;
     private bool isFiring;
 
+    public float horizontal;
+    public float vertical;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -55,14 +58,14 @@ public class AnimatorController : MonoBehaviourPunCallbacks, IPunObservable
             return;
         }
     
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-        if (v < 0)
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
+        if (vertical < 0)
         {
-            v = 0;
+            vertical = 0;
         }
-        animator.SetFloat("Speed", h * h + v * v);
-        animator.SetFloat("Direction", h, directionDampTime, Time.deltaTime);
+        animator.SetFloat("Speed", horizontal * horizontal + vertical * vertical);
+        animator.SetFloat("Direction", horizontal, directionDampTime, Time.deltaTime);
 
     }
 
@@ -92,12 +95,20 @@ public class AnimatorController : MonoBehaviourPunCallbacks, IPunObservable
             return;
         }
 
+        if (other.gameObject.CompareTag("barrel")) {
+            BarrelController.instance.AddBarrelCount();
+        }
+
         if (!other.name.Contains("HitBox"))
         {
             return;
         }
 
-        health -= 0.1f;
+
+        else
+        {
+            health -= 0.1f;
+        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -106,6 +117,7 @@ public class AnimatorController : MonoBehaviourPunCallbacks, IPunObservable
         {
             stream.SendNext(isFiring);
             stream.SendNext(health);
+
         }
         else
         {
