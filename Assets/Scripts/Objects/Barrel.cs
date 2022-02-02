@@ -3,17 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Barrel : MonoBehaviourPunCallbacks, IPunObservable
+public class Barrel : MonoBehaviourPun, IPunObservable
 {
+    private MeshRenderer mesh;
+    private bool meshActive;
 
-    private void Start()
+    private void Awake()
     {
-        photonView.ObservedComponents.Add (this);
+        mesh = GetComponent<MeshRenderer>();
+        meshActive = true;
+    }
+
+    /*
+   private void OnTriggerEnter(Collider other)
+    {
+       
+       BarrelController.instance.CallBarrel();
+    
+        
+    }
+    */
+
+    public void DestroyThisBarrel()
+    {
+        //Destroy(this.gameObject);
+        meshActive = false;
+    }
+
+    private void Update()
+    {
+        mesh.enabled = meshActive;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         
+        if (stream.IsWriting)
+        {
+            stream.SendNext(meshActive);
+
+        }
+        else
+        {
+            this.meshActive = (bool)stream.ReceiveNext();
+        }
+        
     }
-    
 }

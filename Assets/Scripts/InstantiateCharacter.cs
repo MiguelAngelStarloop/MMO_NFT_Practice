@@ -16,7 +16,7 @@ public class InstantiateCharacter : MonoBehaviour
     private void InstantiatePlayer() { 
         
             character = GameManager.instance.UseThisCharacater();
-            PhotonNetwork.Instantiate(character.name, Vector3.zero, Quaternion.identity);      
+            PhotonNetwork.Instantiate(character.name, new Vector3 (0,0, -5), Quaternion.identity);      
     }
 
     /*

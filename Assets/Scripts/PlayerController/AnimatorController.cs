@@ -96,7 +96,12 @@ public class AnimatorController : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         if (other.gameObject.CompareTag("barrel")) {
-            BarrelController.instance.AddBarrelCount();
+
+            //string newBarrelName = "BarrelTouch";
+            //other.gameObject.name = newBarrelName;
+            BarrelController.instance.CallBarrel();
+            Barrel barrel = other.gameObject.GetComponent<Barrel>();
+            barrel.DestroyThisBarrel();
         }
 
         if (!other.name.Contains("HitBox"))

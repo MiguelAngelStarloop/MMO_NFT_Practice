@@ -6,7 +6,7 @@ public class AnotherBarrel : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        BarrelController.instance.AddBarrelCount();
+        //BarrelController.instance.AddBarrelCount();
         Debug.Log("Barrel Destroy");
         Destroy(this.gameObject);
     }
