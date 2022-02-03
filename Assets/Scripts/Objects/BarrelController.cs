@@ -10,9 +10,12 @@ public class BarrelController : MonoBehaviourPun
 
     private int barrelsAmmmount = 0;
     private Vector3 barrelPosition;
+    private bool isUsedPowerUp;
 
     [SerializeField] private TextMeshProUGUI barrelCount;
+    [SerializeField] private TextMeshProUGUI barrelsPanelCount;
     [SerializeField] private GameObject barrelObject;
+    [SerializeField] private GameObject powerUPText;
 
     private void Awake()
     {
@@ -30,9 +33,10 @@ public class BarrelController : MonoBehaviourPun
         StartCoroutine(BarrelCreator());
     }
 
-    public void CallBarrel()
+    public void CallBarrel(int barrelID)
     {
         photonView.RPC("AddBarrelCount", RpcTarget.AllBuffered);
+        photonView.RPC("DestroyBarrel", RpcTarget.MasterClient, barrelID);
     }
 
     [PunRPC]
@@ -40,6 +44,14 @@ public class BarrelController : MonoBehaviourPun
     {
         barrelsAmmmount++;
         barrelCount.text = "" + barrelsAmmmount;
+        barrelsPanelCount.text = "" + barrelsAmmmount;
+       
+    }
+    [PunRPC]
+    private void DestroyBarrel (int thisBarrel)
+    {
+        PhotonNetwork.Destroy(PhotonView.Find(thisBarrel).gameObject);
+
     }
 
     private void InstantiateBarrel()
@@ -51,7 +63,7 @@ public class BarrelController : MonoBehaviourPun
     {
         for (int i = 0; i< 10; i++)
         {
-            int randomPosition = Random.Range(0, 5);
+            int randomPosition = Random.Range(-5, 5);
             i = 0;
             barrelPosition = new Vector3(randomPosition, 0, randomPosition);
             InstantiateBarrel();
@@ -59,6 +71,37 @@ public class BarrelController : MonoBehaviourPun
         }
     }
 
+    #region BARRELS PANEL
 
- 
+    public void UseBarrelButton()
+    {
+        photonView.RPC("UseBarrel", RpcTarget.AllBuffered);
+        isUsedPowerUp = true;
+    }
+
+    [PunRPC]
+    private void UseBarrel()
+    {
+        barrelsAmmmount--;
+        barrelCount.text = "" + barrelsAmmmount;
+        barrelsPanelCount.text = "" + barrelsAmmmount;
+    }
+
+    public void ExitButton()
+    {
+        if (isUsedPowerUp == true)
+        {
+            powerUPText.SetActive(true);
+            isUsedPowerUp = false;
+            Invoke(nameof(DisablePowerUpText), 1f);
+        }
+    }
+
+    private void DisablePowerUpText()
+    {
+        powerUPText.SetActive(false);
+    }
+
+    #endregion
+
 }

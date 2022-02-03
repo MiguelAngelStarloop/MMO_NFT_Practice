@@ -21,7 +21,7 @@ public class PlayerUI : MonoBehaviour
     private void Awake()
     {
         _canvasGroup = this.GetComponent<CanvasGroup>();
-        this.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
+        this.transform.SetParent(GameObject.Find("Canvas/PlayerUI_Group").GetComponent<Transform>(), false);
     }
 
     private void Start()
