@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Cinemachine;
 
 public class AnimatorController : MonoBehaviourPunCallbacks, IPunObservable
 {
-    private Animator animator;
     [SerializeField] private float directionDampTime = 0.25f;
+    [SerializeField] Transform targetCameraFollow;
+
+
+    private Animator animator;
     public float health = 1;
     private GameObject hitBox;
     private GameObject playerUi;
+    private GameObject cinemachine;
     private bool isFiring;
+    
 
     public float horizontal;
     public float vertical;
@@ -31,6 +37,7 @@ public class AnimatorController : MonoBehaviourPunCallbacks, IPunObservable
         Movement();
         if (photonView.IsMine)
         {
+            //CameraFollow();
             ProcessInputs();
         }
         if (hitBox != null && isFiring != hitBox.activeInHierarchy)
@@ -48,6 +55,11 @@ public class AnimatorController : MonoBehaviourPunCallbacks, IPunObservable
         hitBox.transform.parent = this.gameObject.transform;
         hitBox.name = ("HitBox");
 
+        if (photonView.IsMine)
+        {
+            cinemachine = Instantiate((GameObject)Resources.Load("BaseUI/CM_Ccam1"));
+            cinemachine.SendMessage("FindPlayer", this, SendMessageOptions.RequireReceiver);
+        }
     }
 
 
@@ -68,6 +80,14 @@ public class AnimatorController : MonoBehaviourPunCallbacks, IPunObservable
         animator.SetFloat("Direction", horizontal, directionDampTime, Time.deltaTime);
 
     }
+
+    /*
+    private void CameraFollow()
+    {
+        .LookAt = targetCameraFollow;
+        cin.Follow = targetCameraFollow;
+    }
+    */
 
     
     void ProcessInputs()

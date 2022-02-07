@@ -8,10 +8,13 @@ public class CharacterSelector : MonoBehaviour
     private GameObject CharacterSelectorParent;
     private int listIndex = 0;
 
+    private void Awake()
+    {
+        characterlist.Clear();
+    }
+
     private void Start()
     {
-
-        characterlist.Clear();
         foreach ( Transform child in transform)
         {
             characterlist.Add(child.gameObject);

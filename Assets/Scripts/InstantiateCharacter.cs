@@ -2,27 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Cinemachine;
 
 public class InstantiateCharacter : MonoBehaviour
 {
     [SerializeField] GameObject character;
+    //[SerializeField] CinemachineVirtualCamera virtualCamera;
+    private float randomPosition;
 
     private void Start()
     {     
-            InstantiatePlayer();   
+        InstantiatePlayer();
+       //Invoke(nameof(CameraFollow), 0.5f);
     }
 
- 
+    private void Update()
+    {
+       
+       //CameraFollow();
+        
+    }
+
+
     private void InstantiatePlayer() { 
         
-            character = GameManager.instance.UseThisCharacater();
-            PhotonNetwork.Instantiate(character.name, new Vector3 (0,0, -5), Quaternion.identity);      
+        EnableRandomPosition();
+        
+        character = GameManager.instance.UseThisCharacater();
+        PhotonNetwork.Instantiate(character.name, new Vector3 (randomPosition ,0, -5), Quaternion.identity);
+    }
+   
+    private void EnableRandomPosition()
+    {
+        randomPosition = Random.Range(-3f, 3f);
     }
 
     /*
-    private void EnableRandomPosition()
+    private void CameraFollow()
     {
-        randomPosition = Random.Range(0f, 1f);
+        if (character != null)
+        {
+            Transform characterTransform = character.transform;
+            virtualCamera.Follow = characterTransform;
+            virtualCamera.LookAt = characterTransform;
+            Debug.Log(characterTransform);
+        }
     }
     */
+    
+    
 }
