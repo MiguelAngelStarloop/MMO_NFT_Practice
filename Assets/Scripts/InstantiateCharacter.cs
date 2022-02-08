@@ -7,20 +7,11 @@ using Cinemachine;
 public class InstantiateCharacter : MonoBehaviour
 {
     [SerializeField] GameObject character;
-    //[SerializeField] CinemachineVirtualCamera virtualCamera;
     private float randomPosition;
 
     private void Start()
     {     
         InstantiatePlayer();
-       //Invoke(nameof(CameraFollow), 0.5f);
-    }
-
-    private void Update()
-    {
-       
-       //CameraFollow();
-        
     }
 
 
@@ -36,19 +27,5 @@ public class InstantiateCharacter : MonoBehaviour
     {
         randomPosition = Random.Range(-3f, 3f);
     }
-
-    /*
-    private void CameraFollow()
-    {
-        if (character != null)
-        {
-            Transform characterTransform = character.transform;
-            virtualCamera.Follow = characterTransform;
-            virtualCamera.LookAt = characterTransform;
-            Debug.Log(characterTransform);
-        }
-    }
-    */
-    
-    
+   
 }

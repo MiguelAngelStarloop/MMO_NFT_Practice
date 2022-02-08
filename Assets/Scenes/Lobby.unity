@@ -6763,7 +6763,7 @@ MonoBehaviour:
   randomButon: {fileID: 151315469}
   textLog: {fileID: 1978073741}
   playersCountText: {fileID: 317593606}
-  playersMin: 1
+  playersMin: 2
   playersMax: 4
 --- !u!1 &212551413
 GameObject:

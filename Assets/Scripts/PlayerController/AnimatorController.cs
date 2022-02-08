@@ -37,7 +37,6 @@ public class AnimatorController : MonoBehaviourPunCallbacks, IPunObservable
         Movement();
         if (photonView.IsMine)
         {
-            //CameraFollow();
             ProcessInputs();
         }
         if (hitBox != null && isFiring != hitBox.activeInHierarchy)
@@ -81,15 +80,7 @@ public class AnimatorController : MonoBehaviourPunCallbacks, IPunObservable
 
     }
 
-    /*
-    private void CameraFollow()
-    {
-        .LookAt = targetCameraFollow;
-        cin.Follow = targetCameraFollow;
-    }
-    */
 
-    
     void ProcessInputs()
     {
         if (Input.GetButtonDown("Fire1"))
