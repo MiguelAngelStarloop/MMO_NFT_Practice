@@ -20,7 +20,7 @@ public class InstantiateCharacter : MonoBehaviour
         EnableRandomPosition();
         
         character = GameManager.instance.UseThisCharacater();
-        PhotonNetwork.Instantiate(character.name, new Vector3 (randomPosition ,0, -5), Quaternion.identity);
+        PhotonNetwork.Instantiate(character.name, new Vector3 (-12 ,0, 2), Quaternion.identity);
     }
    
     private void EnableRandomPosition()

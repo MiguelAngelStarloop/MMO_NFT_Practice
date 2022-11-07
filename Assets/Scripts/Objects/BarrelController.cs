@@ -40,7 +40,7 @@ public class BarrelController : MonoBehaviourPun
     }
 
     [PunRPC]
-    private void AddBarrelCount()
+    public void AddBarrelCount()
     {
         barrelsAmmmount++;
         barrelCount.text = "" + barrelsAmmmount;
@@ -63,10 +63,10 @@ public class BarrelController : MonoBehaviourPun
     {
         for (int i = 0; i< 10; i++)
         {
-            int randomPosition = Random.Range(-5, 5);
+            int randomPosition = Random.Range(-10, -15);
             i = 0;
             barrelPosition = new Vector3(randomPosition, 0, randomPosition);
-            InstantiateBarrel();
+            //InstantiateBarrel(); //Funciona regular porque hay paredes. Hay que hacerlo mejor, como instanciarlo en un array de posiciones fijas.
             yield return new WaitForSeconds(8f);
         }
     }

@@ -14,15 +14,17 @@ public class Barrel : MonoBehaviourPun, IPunObservable
         meshActive = true;
     }
 
-    /*
+    
    private void OnTriggerEnter(Collider other)
     {
-       
-       BarrelController.instance.CallBarrel();
-    
+        if (other.gameObject.CompareTag("Player"))
+        {
+            BarrelController.instance.AddBarrelCount();
+            DestroyThisBarrel();
+        }
         
     }
-    */
+    
 
     public void DestroyThisBarrel()
     {
